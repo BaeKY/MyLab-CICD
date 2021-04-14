@@ -32,21 +32,24 @@ pipeline{
         // Stage3 : Publish the artifacts to Nexus
         stage ('publish to Nexus') {
             steps {
-                nexusArtifactUploader artifacts: [
-                    [
-                        artifactId: "${ArtifactId}", 
-                        classifier: '', 
-                        file: 'target/BaeKYDevOpsLab-0.0.4-SNAPSHOT.war', 
-                        type: 'war'
-                    ]
-                ], 
-                credentialsId: '4db5b5a7-7aa7-465c-84d0-79016e99478c', 
-                groupId: "${GroupId}", 
-                nexusUrl: '172.20.10.214:8081', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: 'baeKYDevOpsLab-SNAPSHOT', 
-                version: "${Version}"
+                script {
+                    def NexusRepo = Version.endsWith("SNAPSHOT") ? "baeKYDevOpsLab-SNAPSHOT" : "BaeKYDevOpsLab-RELEASE"
+                    nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: "${ArtifactId}", 
+                            classifier: '', 
+                            file: 'target/BaeKYDevOpsLab-0.0.4-SNAPSHOT.war', 
+                            type: 'war'
+                        ]
+                    ], 
+                    credentialsId: '4db5b5a7-7aa7-465c-84d0-79016e99478c', 
+                    groupId: "${GroupId}", 
+                    nexusUrl: '172.20.10.214:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: "${NexusRepo}", 
+                    version: "${Version}"
+                }
             }
         }
 
