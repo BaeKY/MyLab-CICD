@@ -33,12 +33,12 @@ pipeline{
         stage ('publish to Nexus') {
             steps {
                 script {
-                    def NexusRepo = Version.endsWith("SNAPSHOT") ? "baeKYDevOpsLab-SNAPSHOT" : "BaeKYDevOpsLab-RELEASE"
+                    def NexusRepo = Version.endsWith("SNAPSHOT") ? "BaeKYDevOpsLab-SNAPSHOT" : "BaeKYDevOpsLab-RELEASE"
                     nexusArtifactUploader artifacts: [
                         [
                             artifactId: "${ArtifactId}", 
                             classifier: '', 
-                            file: 'target/BaeKYDevOpsLab-0.0.4-SNAPSHOT.war', 
+                            file: "target/${ArtifactId}-${Version}.war", 
                             type: 'war'
                         ]
                     ], 
