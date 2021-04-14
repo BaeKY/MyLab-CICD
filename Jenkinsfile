@@ -34,29 +34,29 @@ pipeline{
             steps {
                 nexusArtifactUploader artifacts: [
                     [
-                        artifactId: 'BaeKYDevOpsLab', 
+                        artifactId: '${ArtifactId}', 
                         classifier: '', 
                         file: 'target/BaeKYDevOpsLab-0.0.4-SNAPSHOT.war', 
                         type: 'war'
                     ]
                 ], 
                 credentialsId: '4db5b5a7-7aa7-465c-84d0-79016e99478c', 
-                groupId: 'com.baeky', 
+                groupId: '${GroupId}', 
                 nexusUrl: '172.20.10.214:8081', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'baeKYDevOpsLab-SNAPSHOT', 
-                version: '0.0.4-SNAPSHOT'
+                version: '${Version}'
             }
         }
 
         // Stage 4 : Print some informations
         stage ('Print Environment variables') {
             steps {
-                echo "ArtifactID is '{$ArtifactId}'"
-                echo "Version is '{$Version}'"
-                echo "GroupID is '{$GroupId}'"
-                echo "Name is '{$Name}'"
+                echo "ArtifactID is '${ArtifactId}'"
+                echo "Version is '${Version}'"
+                echo "GroupID is '${GroupId}'"
+                echo "Name is '${Name}'"
             }
         }
 
